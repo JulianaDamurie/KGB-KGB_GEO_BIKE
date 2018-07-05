@@ -1,7 +1,5 @@
-DROP TABLE dispositivoAvaliaRua;
 DROP TABLE usuarioAvaliaRua;
 DROP TABLE rua;
-DROP TABLE dispositivo;
 DROP TABLE usuario;
 
 CREATE TABLE usuario (
