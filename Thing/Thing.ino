@@ -20,6 +20,9 @@
 #define LDR_ID    2
 #define LDR_NAME  "LDR"
 
+#define OSC_PIN   3
+#define OSC_ID    3
+#define OSC_NAME  "OSC"
 
 KNoTThing thing;
 
@@ -39,28 +42,45 @@ static int ldr_write(int32_t *val,int32_t *multiplier){
     return 0;  
 }
 
+static int osc_read(uint8_t *val)
+{
+    *val = digitalRead(OSC_PIN);
+    Serial.print(F("Oscilação Status: "));
+    if (*val)
+      Serial.println(F("ON"));
+    else
+      Serial.println(F("OFF"));
+    return 0;
+}
+
+static int osc_write(uint8_t *val)
+{
+    return 0;
+}
+
 void setup()
 {
     Serial.begin(9600);
 
 
     pinMode(LDR_PIN,INPUT);
-    /* TODO: Read lamp status from eeprom for reboot cases */
+    pinMode(OSC_PIN,INPUT);
+    
     thing.init("KGB Geo Bike");
     
     thing.registerIntData(LDR_NAME,LDR_ID, KNOT_TYPE_ID_LUMINOSITY,KNOT_UNIT_LUMINOSITY_LM,ldr_read,ldr_write);
+    thing.registerBoolData(OSC_NAME,OSC_ID, KNOT_TYPE_ID_SWITCH,KNOT_UNIT_NOT_APPLICABLE,osc_read,osc_write);
     
     /* Send data every 10 seconds*/
-    //thing.registerDefaultConfig(LIGHT_BULB_ID, KNOT_EVT_FLAG_TIME, 10, 0, 0, 0, 0);
-    thing.registerDefaultConfig(LDR_ID, KNOT_EVT_FLAG_TIME, 10, 0, 0, 0, 0);
-
-    Serial.println(F("LDR status"));
-    int valo;
+    
+    thing.registerDefaultConfig(LDR_ID, KNOT_EVT_FLAG_TIME, 1, 0, 0, 0, 0);
+    thing.registerDefaultConfig(OSC_ID, KNOT_EVT_FLAG_TIME, 1, 0, 0, 0, 0);
+    
+    Serial.println(F("KGB Thing status"));
 }
 
 
 void loop()
 {
-    //Serial.println(analogRead(LDR_PIN));
     thing.run();
 }
