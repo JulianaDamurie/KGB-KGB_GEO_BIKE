@@ -5,8 +5,6 @@ Projeto disciplina ESS
 # Sensores no Arduino:
 	> luminosidade
 	> vibração
-	> sonico
-    > painel
     
 knot 
 raspberry
