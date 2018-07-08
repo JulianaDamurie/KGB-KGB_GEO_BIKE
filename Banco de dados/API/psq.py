@@ -1,7 +1,7 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python2.7
-#
 # Small script to show PostgreSQL and Pyscopg together
-#
+
 
 import psycopg2
 import sys
@@ -15,7 +15,7 @@ class Dados:
         return v3+v4
 
 try:
-        conn = psycopg2.connect(dbname='kgb', user='saci',host="localhost", password='123456')
+        conn = psycopg2.connect(dbname='kgb', user='kgb',host="localhost", password='123456')
         print("Oba, conectou ao psql!")
         
 except:
