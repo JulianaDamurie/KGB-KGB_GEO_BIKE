@@ -30,23 +30,6 @@ def getTable(tabela):
 	cur.execute('SELECT * FROM ' + tabela)
 	return cur.fetchall()
 
-#Retorna as medias a serem inseridas na tabela Rua
-def calculaMedia(tabela):
-	global cur
-	lum = 0
-	vibracao = 0
-	media = 0
-
-	for x in tabela:
-		lum = lum + x[1]
-		vibracao = vibracao + x[2]
-	vibracao = vibracao / len(tabela)
-	lum = lum / len(tabela)
-
-	media = (lum + vibracao)/2
-
-	return media,lum,vibracao
-
 #Calcular medias amostrais
 def calcular_media(v1, v2, v3):
         v3 = float(v3) / float(v2+1)
@@ -70,7 +53,6 @@ def atualizaMediaRua(rua, media, lum, vibracao):
 		cur.execute('SELECT media, luminosidade, vibracao, amostra FROM rua WHERE nome = ' + "'" + rua + "'")
 		upd_rua = cur.fetchall()
 
-	print(upd_rua)
 	mediaAntiga = upd_rua[0][0]
 	lumAntiga = upd_rua[0][1]
 	vibracaoAntiga = upd_rua[0][2]
@@ -85,10 +67,16 @@ def atualizaMediaRua(rua, media, lum, vibracao):
 
 #Realiza todas a modificações e calculos para atualizar a tabela
 def modificaRua(tabela_dispositivo, tabela_app):
-	media, lum, vibracao = calculaMedia(tabela_dispositivo)
+	lum, vibracao = tabela_dispositivo[0][1], tabela_dispositivo[0][2]
+	media = (lum + vibracao) / 2
 	upd_media, upd_lum, upd_vibracao, amostra = atualizaMediaRua(tabela_app[0][0], media, lum, vibracao)
 	atualizaTabela('rua', ('media = ' + str(upd_media) + ', luminosidade = ' + str(upd_lum) + ', vibracao = ' + str(upd_vibracao) + ', amostra = ' + str(amostra)), str(tabela_app[0][0]))
-	print('Rua '+ str(tabela_app[0]) + ' atualizada com sucesso!')
+	
+	print(str(tabela_app[0][0]) + ' atualizada com sucesso!')
+	print('media = ' + str(upd_media))
+	print('luminosidade = ' + str(upd_lum))
+	print('vibracao = ' + str(upd_vibracao))
+	print('amostra = ' + str(amostra) + '\n')
 
 #Salva as alterações no BD e fecha a conexão
 def finalizaConexao():
@@ -117,21 +105,28 @@ def insertIntoRua(nomeRua):
 #--Código principal-----------------------------------------------------------------------------------------------
 tabela_app = []
 tabela_dispositivo = []
+ruaAtual = ''
 KGBconnect()
 
 while(1):
-	while(tabela_app == []):
-		#Carrega a tabela app e dispositivo do BD
+	#Carrega a tabela app e dispositivo do BD
+	while(tabela_app == []): 	
 		tabela_app = getTable('app')
+
+	ruaAtual = tabela_app[0][0]				#ERRO
+	if(ruaAtual != tabela_app[0][0]):
+		cleanTable('dispositivo')
 
 	tabela_dispositivo = getTable('dispositivo')
 	if(tabela_dispositivo != []):
 		#Calcula e atualiza as informações da rua atual, depois limpa a tabela dispositivo e exclui a primeira linha do app
+		print(tabela_app)
 		modificaRua(tabela_dispositivo, tabela_app)
-		cleanTable('dispositivo')
+		deleteRow('dispositivo', ('timestmp = ' + "'" + str(tabela_dispositivo[0][0] + "'")))
 		deleteRow('app', ('local = ' + "'"+str(tabela_app[0][0])+"'"))
 
-	conn.commit()
+		conn.commit()
+		tabela_app = getTable('app')
 
 finalizaConexao()
 
