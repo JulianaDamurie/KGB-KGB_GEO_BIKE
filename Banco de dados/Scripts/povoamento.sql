@@ -22,7 +22,7 @@ INSERT INTO usuario VALUES ('Juan', '555555');
 INSERT INTO app VALUES ('R. Bacatuba');
 INSERT INTO app VALUES ('Av. da Engenharia');
 INSERT INTO app VALUES ('Av. Jorn. Anibal Fernandes');
-INSERT INTO app VALUES ('Av. Reitor Joaquim Amazonas')
+INSERT INTO app VALUES ('Av. Reitor Joaquim Amazonas');
 
 --Insere na tabela dispositivo
 INSERT INTO dispositivo VALUES ('1111', 5, 5);
