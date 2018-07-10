@@ -1,6 +1,8 @@
 DROP TABLE usuarioAvaliaRua;
 DROP TABLE rua;
 DROP TABLE usuario;
+DROP TABLE dispositivo;
+DROP TABLE app;
 
 CREATE TABLE usuario (
 	login text PRIMARY KEY,
@@ -12,7 +14,7 @@ CREATE TABLE rua (
 	media real,
 	luminosidade real,
 	vibracao real,
-	amostra numeric
+	amostra real
 );
 
 CREATE TABLE usuarioAvaliaRua (
@@ -21,6 +23,17 @@ CREATE TABLE usuarioAvaliaRua (
 	nota real,
 	PRIMARY KEY (loginUsuario, nomeRua)
 );
+
+CREATE TABLE dispositivo (
+	timestmp text PRIMARY KEY,
+	luminosidade real,
+	vibracao real
+);
+
+CREATE TABLE app (
+	local text PRIMARY KEY
+);
+
 
 	
 
