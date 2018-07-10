@@ -106,29 +106,49 @@ def insertIntoRua(nomeRua):
 tabela_app = []
 tabela_dispositivo = []
 ruaAtual = ''
-KGBconnect()
+x = 1
 
-while(1):
+#Conecta ao banco e inicializa as tabelas vazias
+KGBconnect()
+cleanTable('dispositivo')
+cleanTable('app')
+conn.commit()
+
+try: 
 	#Carrega a tabela app e dispositivo do BD
 	while(tabela_app == []): 	
 		tabela_app = getTable('app')
+		if (tabela_app != []):
+			ruaAtual = tabela_app[0][0]
 
-	ruaAtual = tabela_app[0][0]				#ERRO
-	if(ruaAtual != tabela_app[0][0]):
-		cleanTable('dispositivo')
+	while(1):
+		while (tabela_app == []):
+			tabela_app = getTable('app')
 
-	tabela_dispositivo = getTable('dispositivo')
-	if(tabela_dispositivo != []):
-		#Calcula e atualiza as informações da rua atual, depois limpa a tabela dispositivo e exclui a primeira linha do app
-		print(tabela_app)
-		modificaRua(tabela_dispositivo, tabela_app)
-		deleteRow('dispositivo', ('timestmp = ' + "'" + str(tabela_dispositivo[0][0] + "'")))
-		deleteRow('app', ('local = ' + "'"+str(tabela_app[0][0])+"'"))
+		if(ruaAtual != tabela_app[0][0]):
+			print('Mudanca de rua!')
+			print('Rua antiga: ' + ruaAtual)
+			print('Nova rua: ' + tabela_app[0][0] + '\n')
+			cleanTable('dispositivo')
+			conn.commit()		
+			ruaAtual = tabela_app[0][0]
 
-		conn.commit()
+		if (len(tabela_app) > 1):
+			deleteRow('app', ('local = ' + "'"+ruaAtual+"'"))
+			ruaAtual = tabela_app[0][0]
+			conn.commit()
+
 		tabela_app = getTable('app')
+		tabela_dispositivo = getTable('dispositivo')
 
-finalizaConexao()
+		if(tabela_dispositivo != [] and tabela_app != []):
+			#Calcula e atualiza as informações da rua atual, depois limpa a tabela dispositivo e exclui a primeira linha do app
+			modificaRua(tabela_dispositivo, tabela_app)
+			deleteRow('dispositivo', ('timestmp = ' + "'" + str(tabela_dispositivo[0][0] + "'")))
+			conn.commit()
+	
+except:
+	finalizaConexao()
 
 
 
