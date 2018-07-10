@@ -150,15 +150,3 @@ try:
 except:
 	finalizaConexao()
 
-
-
-
-
-
-
-
-
-
-
-
-
