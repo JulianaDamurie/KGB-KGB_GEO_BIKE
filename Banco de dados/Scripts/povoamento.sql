@@ -1,12 +1,12 @@
 --Insere ruas
-INSERT INTO rua VALUES ('Av. Prof Artur de Sá', 0, 0, 0, 0);
+INSERT INTO rua VALUES ('Av. Prof. Artur de Sá', 0, 0, 0, 0);
 INSERT INTO rua VALUES ('Av. da Engenharia', 0, 0, 0, 0);
 INSERT INTO rua VALUES ('Av. dos Funcionários', 0, 0, 0, 0);
 INSERT INTO rua VALUES ('R. Acdo. Hélio Ramos', 0, 0, 0, 0);
 INSERT INTO rua VALUES ('Av. da Arquitetura', 0, 0, 0, 0);
 INSERT INTO rua VALUES ('Av. Reitor Joaquim Amazonas', 0, 0, 0, 0);
-INSERT INTO rua VALUES ('Av. Prof Luís Freire', 0, 0, 0, 0);
-INSERT INTO rua VALUES ('Av. Visc de São Leopoldo', 0, 0, 0, 0);
+INSERT INTO rua VALUES ('Av. Prof. Luís Freire', 0, 0, 0, 0);
+INSERT INTO rua VALUES ('Av. Visc. de São Leopoldo', 0, 0, 0, 0);
 INSERT INTO rua VALUES ('Av. Jorn. Anibal Fernandes', 0, 0, 0, 0);
 INSERT INTO rua VALUES ('R. Bacatuba', 0, 0, 0, 0);
 INSERT INTO rua VALUES ('Av. Prof. Moraes Rego', 0, 0, 0, 0);
