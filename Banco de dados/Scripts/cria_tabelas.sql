@@ -33,13 +33,3 @@ CREATE TABLE dispositivo (
 CREATE TABLE app (
 	local text PRIMARY KEY
 );
-
-
-	
-
-
-
-
-
-
-
