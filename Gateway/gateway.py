@@ -71,15 +71,15 @@ while(1):
 	string = " TIME: " + str(time) + " | SENSOR LDR: " + str(LDR) + " | SENSOR VIBRAÇÃO: " + str(OSC)
 	print string
 
-	value_one = LDR/5.5
+	value_one = LDR/30
 
 	if value_one>10:
 		value_one = 10
 
 	if str(OSC) == 'False' :
-		value_two = 0
+		value_two = 10
 	else:
-		value_two = 1 
+		value_two = 0 
 
 	insert(time,value_one,value_two)
 
